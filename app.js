@@ -513,14 +513,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let deferredPrompt = null;
     const installBtn = document.getElementById('install-btn');
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        if (installBtn) {
-            installBtn.classList.remove('hidden');
-        }
-    });
-
     if (installBtn) {
         installBtn.addEventListener('click', async () => {
             if (!deferredPrompt) return;
@@ -534,17 +526,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.addEventListener('appinstalled', () => {
-        console.log('Music Recording App successfully installed.');
-        if (installBtn) installBtn.classList.add('hidden');
-    });
+    
+window.addEventListener('appinstalled', () => {
+    console.log('Music Recording App successfully installed.');
+    if (installBtn) installBtn.classList.add('hidden');
+});
+
 // Register the service worker
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker
-      .register("./service-worker.js")
-      .then(() => console.log("Service Worker registered successfully"))
-      .catch((error) => console.error("Service Worker registration failed:", error));
-  });
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(() => console.log('Service Worker registered successfully'))
+            .catch(error => console.error('Service Worker registration failed:', error));
+    });
 }
-   
+
+}); // End of DOMContentLoaded
