@@ -1,0 +1,610 @@
+/* ==========================================================================
+   Music Recording App - Core Styles & Studio Dashboard Styling
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties & Variables
+   -------------------------------------------------------------------------- */
+:root {
+    --bg-primary: #121214;
+    --bg-secondary: #1a1a1e;
+    --bg-panel: #23232a;
+    --bg-panel-hover: #2d2d36;
+    
+    --text-primary: #f0f0f5;
+    --text-secondary: #a0a0b0;
+    --text-muted: #6c6c7d;
+
+    --accent-red: #ff4757;
+    --accent-red-hover: #ff6b81;
+    --accent-yellow: #ffa502;
+    --accent-green: #2ed573;
+    --accent-blue: #1e90ff;
+    --accent-purple: #70a1ff;
+
+    --key-white-bg: #ffffff;
+    --key-white-active: #e0e0e0;
+    --key-black-bg: #1e1e24;
+    --key-black-active: #3a3a45;
+
+    --border-color: #32323d;
+    --border-radius-sm: 6px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 16px;
+
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.35);
+    --shadow-sharp: 0 2px 8px rgba(0, 0, 0, 0.5);
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --transition-speed: 0.2s;
+}
+
+/* --------------------------------------------------------------------------
+   2. Global Resets & Base Typography
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    touch-action: manipulation;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* Helper Utilities */
+.hidden {
+    display: none !important;
+}
+
+.scrollable-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* --------------------------------------------------------------------------
+   3. Studio Layout & App Shell
+   -------------------------------------------------------------------------- */
+.studio-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px;
+    width: 100%;
+}
+
+.studio-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    margin-top: 16px;
+}
+
+/* Panel Containers */
+.panel {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 16px;
+    box-shadow: var(--shadow-soft);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.panel-header h2 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.panel-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   4. Header & Navigation Component
+   -------------------------------------------------------------------------- */
+.studio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-secondary);
+    padding: 12px 20px;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand .logo-icon {
+    font-size: 1.5rem;
+}
+
+.brand h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-disconnected {
+    background-color: rgba(255, 71, 87, 0.15);
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+}
+
+.status-connected {
+    background-color: rgba(46, 213, 115, 0.15);
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+}
+
+/* --------------------------------------------------------------------------
+   5. General Buttons, Controls & Mixer Inputs
+   -------------------------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    user-select: none;
+    text-decoration: none;
+}
+
+.btn:disabled, .btn.disabled-link {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn-primary { background-color: var(--accent-blue); color: #fff; }
+.btn-primary:hover { background-color: #0077e6; }
+
+.btn-secondary { background-color: var(--bg-panel-hover); color: var(--text-primary); border: 1px solid var(--border-color); }
+.btn-secondary:hover { background-color: var(--border-color); }
+
+.btn-danger { background-color: var(--accent-red); color: #fff; }
+.btn-danger:hover { background-color: var(--accent-red-hover); }
+
+.btn-warning { background-color: var(--accent-yellow); color: #121214; }
+.btn-warning:hover { background-color: #e09200; }
+
+.btn-success { background-color: var(--accent-green); color: #121214; }
+.btn-success:hover { background-color: #26af5f; }
+
+.btn-square { background-color: var(--bg-panel-hover); color: var(--text-primary); border: 1px solid var(--border-color); }
+.btn-square:hover { background-color: var(--border-color); }
+
+.btn-outline { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
+.btn-outline:hover { background-color: var(--bg-panel-hover); color: var(--text-primary); }
+
+.select-input, .number-input {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 6px 10px;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+/* Custom Range Sliders & Volume Controls */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type="range"]:focus {
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: var(--bg-secondary);
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -5px;
+    box-shadow: 0 0 6px rgba(30, 144, 255, 0.5);
+}
+
+input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: var(--bg-secondary);
+    border-radius: 3px;
+    border: 1px solid var(--border-color);
+}
+
+input[type="range"]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(30, 144, 255, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   6. Recording & Voice Panel Component
+   -------------------------------------------------------------------------- */
+.recording-panel .grid-recorder {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.timer-display {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    background-color: rgba(255, 71, 87, 0.1);
+    padding: 4px 12px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid rgba(255, 71, 87, 0.3);
+}
+
+.recorder-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.visualizer-container {
+    width: 100%;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    height: 100px;
+}
+
+#audio-visualizer {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.playback-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.audio-player {
+    flex: 1;
+    min-width: 250px;
+    height: 40px;
+    border-radius: var(--border-radius-sm);
+}
+
+/* --------------------------------------------------------------------------
+   7. Virtual Piano Keyboard Component
+   -------------------------------------------------------------------------- */
+.piano-panel {
+    user-select: none;
+}
+
+.octave-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.piano-keyboard-container {
+    position: relative;
+    display: flex;
+    height: 160px;
+    background-color: var(--bg-secondary);
+    padding: 10px;
+    border-radius: var(--border-radius-sm);
+    justify-content: center;
+    overflow-x: auto;
+}
+
+.piano-key {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+    border-radius: 0 0 4px 4px;
+    cursor: pointer;
+    transition: background-color 0.1s ease, transform 0.05s ease;
+}
+
+.key-white {
+    width: 44px;
+    height: 140px;
+    background-color: var(--key-white-bg);
+    color: #121214;
+    border: 1px solid #ccc;
+    z-index: 1;
+    margin: 0 1px;
+}
+
+.key-white.active, .key-white:active {
+    background-color: var(--key-white-active);
+    transform: translateY(2px);
+}
+
+.key-black {
+    width: 28px;
+    height: 85px;
+    background-color: var(--key-black-bg);
+    color: var(--text-primary);
+    z-index: 2;
+    margin-left: -15px;
+    margin-right: -15px;
+    border: 1px solid #000;
+}
+
+.key-black.active, .key-black:active {
+    background-color: var(--key-black-active);
+    transform: translateY(2px);
+}
+
+.key-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    pointer-events: none;
+    text-align: center;
+    line-height: 1.1;
+}
+
+/* --------------------------------------------------------------------------
+   8. Drum Pads Grid Component
+   -------------------------------------------------------------------------- */
+.pads-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.drum-pad {
+    aspect-ratio: 1 / 1;
+    min-height: 80px;
+    background-color: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    user-select: none;
+}
+
+.drum-pad:hover {
+    background-color: var(--bg-panel-hover);
+    border-color: var(--accent-purple);
+}
+
+.drum-pad.active, .drum-pad:active {
+    background-color: var(--accent-purple);
+    color: #fff;
+    transform: scale(0.96);
+    box-shadow: 0 0 12px rgba(112, 161, 255, 0.5);
+}
+
+.pad-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.pad-shortcut {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.drum-pad.active .pad-shortcut {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* --------------------------------------------------------------------------
+   9. Drum Beat Sequencer Grid Component
+   -------------------------------------------------------------------------- */
+.sequencer-transport {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.tempo-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+}
+
+.tempo-control input {
+    width: 60px;
+    text-align: center;
+}
+
+.sequencer-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 680px;
+}
+
+.seq-track {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.track-label {
+    width: 90px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    gap: 4px;
+    flex: 1;
+}
+
+.seq-step {
+    aspect-ratio: 1 / 1;
+    min-width: 28px;
+    height: 36px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.seq-step:nth-child(4n+1) {
+    border-left: 2px solid var(--text-muted);
+}
+
+.seq-step.active {
+    background-color: var(--accent-green);
+    border-color: var(--accent-green);
+}
+
+.seq-step.playing {
+    border-color: #fff;
+    box-shadow: 0 0 8px #fff;
+}
+
+.seq-step.active.playing {
+    background-color: #55efc4;
+    border-color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   10. Footer Component
+   -------------------------------------------------------------------------- */
+.studio-footer {
+    text-align: center;
+    padding: 20px 0 10px 0;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   11. Mobile Responsiveness & Touch Optimization
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .studio-wrapper {
+        padding: 8px;
+    }
+
+    .studio-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .pads-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .piano-keyboard-container {
+        justify-content: flex-start;
+    }
+
+    .playback-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .audio-player {
+        width: 100%;
+    }
+
+    .sequencer-transport {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
